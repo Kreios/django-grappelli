@@ -52,7 +52,11 @@
             } else {
                 text.show();
             }
-            text.html('<span class="grp-placeholder-label">' + data[0].label + '</span>');
+            // Change by dominique.brogard@kreios.lu: Replace simple label with link to refered entity.
+            // Still to be done: Remove hard-coded "/admin/" part from link
+            //text.html('<span class="grp-placeholder-label">' + data[0].label + '</span>');
+            text.html('<a href="/admin/'+ grappelli.get_app_label(elem) + '/' + grappelli.get_model_name(elem) + '/' + elem.val() + 
+                '" class="grp-placeholder-label">' + data[0].label + '</a>');
         });
     };
     
