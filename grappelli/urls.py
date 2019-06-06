@@ -2,17 +2,16 @@
 
 # DJANGO IMPORTS
 try: 
-    from django.conf.urls import url, patterns
+    from django.conf.urls import url
 except ImportError: 
     # for Django version less then 1.4
-    from django.conf.urls.defaults import url, patterns
+    from django.conf.urls.defaults import url
 
 from django.views.generic.base import TemplateView
 from .views.related import RelatedLookup, M2MLookup, AutocompleteLookup
 
 
-urlpatterns = patterns('',
-
+urlpatterns = [
     # FOREIGNKEY & GENERIC LOOKUP
     url(r'^lookup/related/$', RelatedLookup.as_view(), name="grp_related_lookup"),
     url(r'^lookup/m2m/$', M2MLookup.as_view(), name="grp_m2m_lookup"),
@@ -51,5 +50,4 @@ urlpatterns = patterns('',
     url(r'^grp-doc/mueller-grid-system-layouts/', TemplateView.as_view(template_name='grp_doc/mueller_grid_system_layouts.html'), name="grp_doc_mueller_grid_system_layouts"),
 
     url(r'^grp-doc', TemplateView.as_view(template_name='grp_doc/index.html'), name="grp_doc"),
-
-)
+]

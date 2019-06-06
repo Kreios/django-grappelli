@@ -10,6 +10,7 @@ except ImportError:
     from django.utils import simplejson as json
 
 # django imports
+from django import VERSION
 from django import template
 from django.contrib.contenttypes.models import ContentType
 from django.utils.formats import get_format
@@ -192,8 +193,15 @@ def admin_list_filter(cl, spec):
         tpl = get_template(cl.model_admin.change_list_filter_template)
     except:
         tpl = get_template(spec.template)
-    return tpl.render(Context({
-        'title': spec.title,
-        'choices': list(spec.choices(cl)),
-        'spec': spec,
-    }))
+    if VERSION[0] == 1 and VERSION[1] < 11:
+        return tpl.render(Context({
+            'title': spec.title,
+            'choices': list(spec.choices(cl)),
+            'spec': spec,
+        }))
+    else:
+        return tpl.render({
+            'title': spec.title,
+            'choices': list(spec.choices(cl)),
+            'spec': spec,
+        })
